@@ -1,0 +1,42 @@
+---
+title: "Test for YESCDS2"
+repo-url: https://github.com/vjcitn"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-expand: 3
+    toc-title: Sections
+    code-fold: true
+    code-links:
+      - text: Quarto (source code)
+        icon: github
+        href: https://github.com/vjcitn/vjcitn.github.io
+vignette: >
+  %\VignetteIndexEntry{Test for YESCDS2}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+engine: knitr
+knitr: 
+  opts_chunk: 
+    collapse: true
+execute:
+  warning: false
+filters:
+  - webr
+webr:
+  repos: ['https://repo.r-wasm.org', 'https://webr.bioconductor.org']
+  packages: ['ggplot2','parody','DT']
+---
+
+# A view of breast cancer incidence as recorded in SEER
+
+```{webr-r}
+seer_2018 = read.csv("https://raw.githubusercontent.com/vjcitn/YESCDS/main/SEER_2018.csv")
+eso = seer_2018[seer_2018$CancerSite=="Breast" & seer_2018$Sex =="Female",]
+plot(eso$Year, eso$rate.2.2018, col=factor(eso$Race))
+legend(2010,12,col=1:3,legend=c("all", "black", "white"),pch=1)
+table(eso$Race)
+```
+
+Change the CancerSite 'filter' to "Esophagus"
